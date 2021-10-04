@@ -44,7 +44,7 @@ print()
 
 #create dictionary for hurricane data
 #hurricane names as key and hurricane data details as value
-def hurricane_dictionary(names, months,years,max_sustained_winds,areas_affected,damages,deaths):
+def hurricane_dictionary(names, months,years,max_sustained_winds,areas_affected,updated_damages,deaths):
   
   hurricane = {}
   hurricane_count = len(names)
@@ -55,11 +55,11 @@ def hurricane_dictionary(names, months,years,max_sustained_winds,areas_affected,
                            "Year": years[i], 
                            "Max Sustained Wind": max_sustained_winds[i], 
                            "Areas Affected": areas_affected[i], 
-                           "Damage": damages[i],
+                           "Damage": updated_damages[i],
                            "Death": deaths[i]}
   return hurricane
 
-hurricane = hurricane_dictionary(names, months,years,max_sustained_winds,areas_affected,damages,deaths)
+hurricane = hurricane_dictionary(names, months,years,max_sustained_winds,areas_affected,updated_damages,deaths)
 print(hurricane)
 print()
 
@@ -124,7 +124,6 @@ print()
 
 #Rate the hurricane using mortality_scale (based on death count)
 #mortality_scale = {0: 0, 1: 100, 2: 500, 3: 1000, 4: 10000}
-#8
 def mortality(hurricane):
   mortality_rates = {0:[], 1:[], 2:[], 3:[], 4:[]}
 
@@ -156,3 +155,114 @@ print()
 
 
 #Print each mortality_rates data (name,death) for every rate
+mortality_rates_0 = {0:[]}
+mortality_rates_1 = {1:[]}
+mortality_rates_2 = {2:[]}
+mortality_rates_3 = {3:[]}
+mortality_rates_4 = {4:[]}
+max_death_data = dict(zip(names,deaths))
+for key,val in max_death_data.items():
+  rate = 0
+  death_count_2 = val
+  if death_count_2 < 100:
+    rate = 0
+  elif death_count_2 >= 100 and death_count_2 < 500:
+    rate = 1
+  elif death_count_2 >= 500 and death_count_2 < 1000:
+    rate = 2
+  elif death_count_2 >= 1000 and death_count_2 < 10000:
+    rate = 3
+  else:
+    rate = 4
+
+  if rate == 0:
+    mortality_rates_0[0].append([key,val])
+  elif rate == 1:
+    mortality_rates_1[1].append([key,val]) 
+  elif rate == 2:
+    mortality_rates_2[2].append([key,val])
+  elif rate == 3:
+    mortality_rates_3[3].append([key,val])
+  elif rate == 4:
+    mortality_rates_4[4].append([key,val])
+
+print("Hurricane rate base on death :")
+print(mortality_rates_0)
+print()
+print(mortality_rates_1)
+print()
+print(mortality_rates_2)
+print()
+print(mortality_rates_3)
+print()
+print(mortality_rates_4)
+print()
+
+
+#Show the max damage from the hurricane
+def max_damage(hurricane):
+
+    max_damage_hurricane= ''
+    max_damage_number= 0
+
+    for i in hurricane:
+        if hurricane[i]['Damage'] == 'Damages not recorded':
+            continue
+        if hurricane[i]['Damage'] > max_damage_number:
+            max_damage_hurricane = hurricane[i]['Name']
+            max_damage_number = hurricane[i]['Damage']
+    return max_damage_hurricane, max_damage_number
+
+max_damage_hurricane, max_damage_number = max_damage(hurricane)
+print("The most damage : \nHurricane Name : " + max_damage_hurricane
+      + "\nDamage : " + str(max_damage_number))
+print()
+
+
+
+#Rate the hurricane based on damage_scale
+#damage_scale = {0: 0, 1: 100000000, 2: 1000000000, 3: 10000000000, 4: 50000000000}
+damages_rates_0 = {0:[]}
+damages_rates_1 = {1:[]}
+damages_rates_2 = {2:[]}
+damages_rates_3 = {3:[]}
+damages_rates_4 = {4:[]}
+max_damage_data = dict(zip(names,updated_damages))
+for key,val in max_damage_data.items():
+  rate = 0
+  damage = val
+  if damage == "Damages not recorded":
+    continue
+  elif damage < 100000000:
+    rate = 0
+  elif damage >= 100000000 and damage < 1000000000:
+    rate = 1
+  elif damage >= 1000000000 and damage < 10000000000:
+    rate = 2
+  elif damage >= 10000000000 and damage < 50000000000:
+    rate = 3
+  else:
+    rate = 4
+
+  if rate == 0:
+    damages_rates_0[0].append([key,val])
+  elif rate == 1:
+    damages_rates_1[1].append([key,val]) 
+  elif rate == 2:
+    damages_rates_2[2].append([key,val])
+  elif rate == 3:
+    damages_rates_3[3].append([key,val])
+  elif rate == 4:
+    damages_rates_4[4].append([key,val])
+
+print("Hurricane rate base on death :")
+print(damages_rates_0)
+print()
+print(damages_rates_1)
+print()
+print(damages_rates_2)
+print()
+print(damages_rates_3)
+print()
+print(damages_rates_4)
+print()
